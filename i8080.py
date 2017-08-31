@@ -43,7 +43,7 @@ class  I8080: #(memory, io):
         if r != 6:
             f=(self.regs[r] << 8) | self.regs[r + 1] 
         else: 
-		    f=self.sp
+             f=self.sp
         return  f
     def set_rp (r, w16):
         if (r != 6) 
