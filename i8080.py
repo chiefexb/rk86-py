@@ -1,4 +1,6 @@
-class  I8080: #(memory, io):
+
+class  I8080 :
+    sp = 0
     pc=0
     iff=0
     sf=0
@@ -9,8 +11,12 @@ class  I8080: #(memory, io):
     #  Registers: b, c, d, e, h, l, m, a
     #             0  1  2  3  4  5  6  7
     regs=[ 0, 0, 0, 0, 0, 0, 0, 0 ]
-        # self.memory = memory
+    def __init__(self,memory):
+        self.memory = memory
         #self.io = io 
+    def memory_read_byte (self,addr):
+        m=self.memory.read(addr & 0xffff) & 0xff
+        return m
     def set_reg (r, w8,self):
         w8 = w8 & 0xff
         if (r != 6):
@@ -45,12 +51,12 @@ class  I8080: #(memory, io):
         else: 
              f=self.sp
         return  f
-    def set_rp (r, w16):
-        if (r != 6) 
-            self.set_reg(r, w16 >> 8)
-            self.set_reg(r + 1, w16 & 0xff)
-        else:
-            self.sp = w16
+    #def set_rp (r, w16):
+    #    if (r != 6) 
+    #        self.set_reg(r, w16 >> 8)
+    #        self.set_reg(r + 1, w16 & 0xff)
+    #    else:
+    #        self.sp = w16
 
     parity_table = [
     1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
@@ -86,11 +92,10 @@ class  I8080: #(memory, io):
 
    
    
-    def self.store_flags () 
-        f = 0
-        if (self.sf):
-            f = f |F_NEG
-        else f &= ~F_NEG
+#    def store_flags () 
+ ##      if (self.sf):
+  #          f = f |F_NEG
+   #     else f &= ~F_NEG
 
         # if (self.zf) f |= F_ZERO   else f &= ~F_ZERO
         # if (self.hf) f |= F_HCARRY else f &= ~F_HCARRY
@@ -99,7 +104,7 @@ class  I8080: #(memory, io):
         # f |= F_UN1    // UN1_FLAG is always 1.
         # f &= ~F_UN3   // UN3_FLAG is always 0.
         # f &= ~F_UN5   // UN5_FLAG is always 0.
-        return f
+    #    return f
 
     # def self.retrieve_flags (f):
         # self.sf = f & F_NEG    ? 1 : 0
