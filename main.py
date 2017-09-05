@@ -11,11 +11,13 @@ def Autoexec():
 def main():
     memory=Memory()
     cpu= I8080(memory)
-    memory.write_raw(0x8003,0x02)
-    m=memory.read(0x8003)
-    print ('LWB=',memory.last_written_byte)
-    print (hex(0x8003 & 0xefff))
-    print (m)
+    memory.write(0xc001,0x80)
+    memory.write(0xc000,26)
+    print ("C",memory.cursor_x_buf)
+    
+    
+    
+    print ("BB",memory.vg75_c001_80_cmd)
 if __name__ == "__main__":
     main()
 
