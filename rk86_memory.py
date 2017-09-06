@@ -29,16 +29,15 @@ class Memory:
         addr &=  0xffff
         f=self.buf[addr]
         if (addr == 0x8002):
-            pass
-            #f=self.keyboard.modifiers
+            f=self.keyboard.modifiers
         if (addr == 0x8001):
-            #keyboard_state = self.keyboard.state
-             ch = 0xff
-             #kbd_scanline = ~self.buf[0x8000]
-             #for  i in range(8):
-              #   if ((1 << i) & kbd_scanline):
-               #      ch &= keyboard_state[i]
-                #     f =ch
+            keyboard_state = self.keyboard.state
+            ch = 0xff
+            kbd_scanline = ~self.buf[0x8000]
+            for  i in range(8):
+                if ((1 << i) & kbd_scanline):
+                    ch &= keyboard_state[i]
+                    f =ch
         if (addr == 0xC001):
              f= 0xff
         return f
@@ -124,3 +123,5 @@ class Memory:
      #   #for (var i = file.start; i <= file.end; ++i) {
       #  #this.write_raw(i, file.image.charCodeAt(i - file.start));
      
+    def __init__(self,keyboard):
+        self.keyboard=keyboard
