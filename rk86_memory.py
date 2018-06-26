@@ -19,6 +19,8 @@ class Memory:
     video_screen_size_y = 0
     video_screen_cursor_x = 0
     video_screen_cursor_y = 0
+    def __init__(self,keyboard):
+        self.keyboard=keyboard
     def length(): 
         return 0x10000
     def read_raw(self,addr):
@@ -123,5 +125,4 @@ class Memory:
      #   #for (var i = file.start; i <= file.end; ++i) {
       #  #this.write_raw(i, file.image.charCodeAt(i - file.start));
      
-    def __init__(self,keyboard):
-        self.keyboard=keyboard
+   

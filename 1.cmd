@@ -1,0 +1,1 @@
+C:\Users\SBT-Shilo-AV\Desktop\soft\python\python.exe  -d %1
