@@ -1,40 +1,18 @@
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
 
-class CellRendererTextWindow(Gtk.Window):
+class UI():
+   # function UI(tape_catalog, runner, memory, autoexec) {
+    def __init__ (self,tape_catalog, runner, memory, autoexec)
+        self.tape_catalog = tape_catalog;
+        self.runner = runner;
+        self.memory = memory;
+        self.autoexec = autoexec;
 
-    def __init__(self):
-        Gtk.Window.__init__(self, title="CellRendererText Example")
+        #self.canvas = document.getElementById("canvas");
+        #self.panel = document.getElementById("back");
+        #self.fullscreen_panel = document.getElementById("fullscreen_panel");
+        
+        #this.screenshot_name = "rk86-screen";
+        #this.screenshot_count = 1;
 
-        self.set_default_size(200, 200)
-
-        self.liststore = Gtk.ListStore(str, str)
-        self.liststore.append(["Fedora", "http://fedoraproject.org/"])
-        self.liststore.append(["Slackware", "http://www.slackware.com/"])
-        self.liststore.append(["Sidux", "http://sidux.com/"])
-
-        treeview = Gtk.TreeView(model=self.liststore)
-
-        renderer_text = Gtk.CellRendererText()
-        column_text = Gtk.TreeViewColumn("Text", renderer_text, text=0)
-        treeview.append_column(column_text)
-
-        renderer_editabletext = Gtk.CellRendererText()
-        renderer_editabletext.set_property("editable", True)
-
-        column_editabletext = Gtk.TreeViewColumn("Editable Text",
-            renderer_editabletext, text=1)
-        treeview.append_column(column_editabletext)
-
-        renderer_editabletext.connect("edited", self.text_edited)
-
-        self.add(treeview)
-
-    def text_edited(self, widget, path, text):
-        self.liststore[path][1] = text
-
-win = CellRendererTextWindow()
-win.connect("delete-event", Gtk.main_quit)
-win.show_all()
-Gtk.main()
+  #self.screenshot_name = "rk86-screen";
+  #self.screenshot_count = 1;
