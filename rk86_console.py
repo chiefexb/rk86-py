@@ -56,6 +56,28 @@ class Console():
             sz -= chunk_sz;
             from_ = (from_ + chunk_sz) & 0xffff;
     ##self.dump_cmd.last_address = from_;
-      
+      def write_byte_cmd (self,cpu):
+          mem=cpu.memory
+          self.term.write("%04X: %02X -> %02X".format(addr, mem.read_raw(addr), ch));
+          if (self.term.argc < 3) { self.term.write("?"); return; }
+          #var addr = parseInt(self.term.argv[1]);
+          #if (isNaN(addr)) addr = 0;
+          addr =0x8000
+          for i in range(addr+32):
+          #for (var i = 2; i < self.term.argc; ++i) {
+           #var ch = parseInt(self.term.argv[i]);
+           #if (isNaN(ch)) break;
+              ch=0xEE
+              #
+              # print ("{}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
+              print ("{}%04X: %02X -> %02X{}".format(addr, mem.read_raw(addr), ch));
+              #self.term.newLine();
+              #print ("{}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
+              print("%04X: %02X -> %02X".format(addr, mem.read_raw(addr), ch))
+              mem.write_raw(addr, ch);
+              addr=addr+1;
+              cpu.memory=mem
+    
+          return cpu
     
     
