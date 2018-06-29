@@ -22,16 +22,16 @@ class Console():
         #  self.dump_cmd.last_address = 0;
         #if (typeof self.dump_cmd.last_length == 'undefined')
         #  self.dump_cmd.last_length = 128;
-        from_ =0x8000
+        from_ =0x0000
         #parseInt(self.term.argv[1]);
         #if (isNaN(from)) from = self.dump_cmd.last_address;
         #var sz = parseInt(self.term.argv[2]);
-        sz=64
+        sz=1024
         #if (isNaN(sz)) sz = self.dump_cmd.last_length;
         #self.dump_cmd.last_length = sz;
         #mem = self.runner.cpu.memory;
         mem = cpu.memory
-        width=8
+        width=16
         while (sz > 0):
             bytes_ = ""
             chars_ = ""
@@ -56,28 +56,28 @@ class Console():
             sz -= chunk_sz;
             from_ = (from_ + chunk_sz) & 0xffff;
     ##self.dump_cmd.last_address = from_;
-      def write_byte_cmd (self,cpu):
-          mem=cpu.memory
-          self.term.write("%04X: %02X -> %02X".format(addr, mem.read_raw(addr), ch));
-          if (self.term.argc < 3) { self.term.write("?"); return; }
-          #var addr = parseInt(self.term.argv[1]);
-          #if (isNaN(addr)) addr = 0;
-          addr =0x8000
-          for i in range(addr+32):
-          #for (var i = 2; i < self.term.argc; ++i) {
-           #var ch = parseInt(self.term.argv[i]);
-           #if (isNaN(ch)) break;
-              ch=0xEE
+    def write_byte_cmd (self,cpu):
+        mem=cpu.memory
+        self.term.write("%04X: %02X -> %02X".format(addr, mem.read_raw(addr), ch));
+        #if (self.term.argc < 3) { self.term.write("?"); return; }
+        #var addr = parseInt(self.term.argv[1]);
+        #if (isNaN(addr)) addr = 0;
+        addr =0x8000
+        for i in range(addr+32):
+        #for (var i = 2; i < self.term.argc; ++i) {
+        #var ch = parseInt(self.term.argv[i]);
+        #if (isNaN(ch)) break;
+            ch=0xEE
               #
               # print ("{}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
-              print ("{}%04X: %02X -> %02X{}".format(addr, mem.read_raw(addr), ch));
-              #self.term.newLine();
+            print ("{}%04X: %02X -> %02X{}".format(addr, mem.read_raw(addr), ch));
+              #self.term.newLine()
               #print ("{}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
-              print("%04X: %02X -> %02X".format(addr, mem.read_raw(addr), ch))
-              mem.write_raw(addr, ch);
-              addr=addr+1;
-              cpu.memory=mem
+            print("%04X: %02X -> %02X".format(addr, mem.read_raw(addr), ch))
+            mem.write_raw(addr, ch);
+            addr=addr+1;
+            cpu.memory=mem
     
-          return cpu
+        return cpu
     
     

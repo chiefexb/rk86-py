@@ -121,7 +121,11 @@ class Memory:
                 self.tape_8002_as_output = 0
         
     def load_file (self, f):
-        pass
+        #for (var i = file.start; i <= file.end; ++i) {
+        #this.write_raw(i, file.image.charCodeAt(i - file.start));
+         for i in range(f['start'],f['end']):
+             self.write_raw(i,f['image'][ i-f['start'] ] )
+    
      #   #for (var i = file.start; i <= file.end; ++i) {
       #  #this.write_raw(i, file.image.charCodeAt(i - file.start));
      
