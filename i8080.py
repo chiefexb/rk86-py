@@ -8,6 +8,9 @@ class  I8080 :
     hf=0
     fzf=0
     fcf=0
+    cf=0
+    zf=0
+    
     #  Registers: b, c, d, e, h, l, m, a
     #             0  1  2  3  4  5  6  7
     regs=[ 0, 0, 0, 0, 0, 0, 0, 0 ]
@@ -17,6 +20,24 @@ class  I8080 :
     def memory_read_byte (self,addr):
         m=self.memory.read(addr & 0xffff) & 0xff
         return m
+    def reg (self,r):
+        #return r != 6 ? this.regs[r] : this.memory_read_byte(this.hl());
+        return (self.regs[r] if r != 6 else self.memory_read_byte (self.hl())  )
+    def rp (self,r):
+        return  (self.regs[r] << 8) | self.regs[r + 1] if r != 6 else self.sp 
+        
+    def bc (self) : return self.rp(0)
+    def de (self) : return self.rp(2)
+    
+    def hl(self): return self.rp(4)
+    def b (self) : return self.reg(0)
+    def c (self) : return self.reg(1)
+    def d (self) : return self.reg(2)
+    def e (self) : return self.reg(3)
+    def h (self) : return self.reg(4)
+    def l (self) : return self.reg(5)
+    def a (self) : return self.reg(7)
+    
     def set_reg (r, w8,self):
         w8 = w8 & 0xff
         if (r != 6):
@@ -24,18 +45,19 @@ class  I8080 :
         else:
             pass
            # self.memory_write_byte(self.hl(), w8)
-    @property
-    def hl(self):
-        return this.rp(4)
-    # def self.memory_read_byte (addr):
-        # return self.memory.read(addr & 0xffff) & 0xff
-    # def self.memory_write_byte(addr, w8):
-        # self.memory.write(addr & 0xffff, w8 & 0xff)
-      # def self.memory_read_word (addr):
-        # return self.memory_read_byte(addr) | (self.memory_read_byte(addr + 1) << 8)
-    # def self.memory_write_word (addr, w16):
-        # self.memory_write_byte(addr, w16 & 0xff)
-        # self.memory_write_byte(addr + 1, w16 >> 8)
+  
+  
+    
+    
+    def memory_read_byte (sel,addr):
+        self.memory.read(addr & 0xffff) & 0xff
+    def smemory_write_byte(addr, w8):
+        self.memory.write(addr & 0xffff, w8 & 0xff)
+    def memory_read_word (addr):
+        self.memory_read_byte(addr) | (self.memory_read_byte(addr + 1) << 8)
+    def memory_write_word (addr, w16):
+        self.memory_write_byte(addr, w16 & 0xff)
+        self.memory_write_byte(addr + 1, w16 >> 8)
     def reg (self,r):
         if r !=6:
             self.regs[r]
@@ -51,12 +73,7 @@ class  I8080 :
             pass
            # self.memory_write_byte(self.hl(), w8)
      #// r - 00 (bc), 01 (de), 10 (hl), 11 (sp)
-    def rp (r): 
-        if r != 6:
-            f=(self.regs[r] << 8) | self.regs[r + 1] 
-        else: 
-             f=self.sp
-        return  f
+   
     #def set_rp (r, w16):
     #    if (r != 6) 
     #        self.set_reg(r, w16 >> 8)
