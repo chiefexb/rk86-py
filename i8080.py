@@ -10,6 +10,7 @@ class  I8080 :
     fcf=0
     cf=0
     zf=0
+    pc=0
     
     #  Registers: b, c, d, e, h, l, m, a
     #             0  1  2  3  4  5  6  7
@@ -20,9 +21,7 @@ class  I8080 :
     def memory_read_byte (self,addr):
         m=self.memory.read(addr & 0xffff) & 0xff
         return m
-    def reg (self,r):
-        #return r != 6 ? this.regs[r] : this.memory_read_byte(this.hl());
-        return (self.regs[r] if r != 6 else self.memory_read_byte (self.hl())  )
+    def reg (self,r): return self.regs[r] if r != 6 else self.memory_read_byte (self.hl())  
     def rp (self,r):
         return  (self.regs[r] << 8) | self.regs[r + 1] if r != 6 else self.sp 
         
@@ -58,12 +57,10 @@ class  I8080 :
     def memory_write_word (addr, w16):
         self.memory_write_byte(addr, w16 & 0xff)
         self.memory_write_byte(addr + 1, w16 >> 8)
-    def reg (self,r):
-        if r !=6:
-            self.regs[r]
-        else:
-            self.memory_read_byte(self.hl());
-        # return r != 6 ? self.regs[r] : self.memory_read_byte(self.hl())
+    def reg (self,r): return  self.regs[r] if r !=6  else self.memory_read_byte(self.hl())
+            
+       
+     
 
     def set_reg (r,w8,self):
         w8 = w8 & 0xff

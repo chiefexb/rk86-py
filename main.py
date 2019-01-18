@@ -20,6 +20,7 @@ def main():
     console=Console(cpu)
     #print ("C",memory.cursor_x_buf)
     #console.dump_cmd(cpu)
+    print (cpu.a() )
     console.help_cmd()
     exit_code=1
     while exit_code:

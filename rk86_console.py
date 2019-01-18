@@ -117,16 +117,15 @@ class Console():
         cpu = self.cpu;
         mem = cpu.memory;
         #self.term.write("PC=%04X A=%02X F=%s%s%s%s%s HL=%04X DE=%04X BC=%04X SP=%04X"
-        print ( "PC={} A={} F={}{}{}{}{} HL={} DE={} BC={} SP={}"
-                    .format(
-                      cpu.pc, cpu.a(), 
+       
+        print ( 'PC={:04X} A={:04X} F={}{}{}{}{} HL={} DE={:04X} BC={:04X} SP={:04X}'.format(  cpu.pc, cpu.a(), 
                       ("C" if cpu.cf else "-"),
                       ("P" if cpu.pf else "-"),
                       ("H" if cpu.hf else "-"),
                       ("Z" if cpu.zf else "-"),
                       ("S" if cpu.sf else "-"),
-                      cpu.hl(), cpu.de(), cpu.bc(), cpu.sp))
-    #self.term.newLine();f
+                      cpu.hl(), cpu.de(), cpu.bc(), cpu.sp) )
+    #self.term.newLine();
     def write_byte_cmd (self,cpu):
         mem=cpu.memory
         self.term.write("%04X: %02X -> %02X".format(addr, mem.read_raw(addr), ch));
@@ -140,7 +139,7 @@ class Console():
         #if (isNaN(ch)) break;
             ch=0xEE
               #
-              # print ("{}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
+              # print ("{:04X}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
             print ("{}%04X: %02X -> %02X{}".format(addr, mem.read_raw(addr), ch));
               #self.term.newLine()
               #print ("{}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
