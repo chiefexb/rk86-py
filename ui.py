@@ -17,7 +17,7 @@
   # #self.screenshot_name = "rk86-screen";
   # #self.screenshot_count = 1;
 def parse_rk86_binary (name):
-    f=open('files\KAKVAS.GAM',mode='rb')
+    f=open('files/'+name, mode='rb')
     file_ = {}
     file_['image']=f.read()
    

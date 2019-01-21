@@ -1,3 +1,4 @@
+from ui import *
 class Console():
     def __init__(self,cpu):
         self.cpu=cpu
@@ -32,6 +33,9 @@ class Console():
          ],
     "be": [ 0,
            "edit breakpoints / be 1 type:exec address:0xf86c count:3"
+          ],
+     "l": [ self.load_cmd,
+           "l - load file / l KAVKAZ.GAM"       
          ],
     "?": [ 0, "this help / ?"]
     }
@@ -83,7 +87,7 @@ class Console():
         #parseInt(self.term.argv[1]);
         #if (isNaN(from)) from = self.dump_cmd.last_address;
         #var sz = parseInt(self.term.argv[2]);
-        sz=1024
+        sz=256
         #if (isNaN(sz)) sz = self.dump_cmd.last_length;
         #self.dump_cmd.last_length = sz;
         #mem = self.runner.cpu.memory;
@@ -149,7 +153,10 @@ class Console():
             cpu.memory=mem
     
         return cpu
-
+    def load_cmd (self, ar):
+       f=parse_rk86_binary ('KAKVAS.GAM')
+       print ('loading KAKVAS.GAM' +str(f['size'] ))
+       self.cpu.memory.load_file(f)
     def parseInt (self,ar):
         ar=ar.lower().lstrip('0x')
         try:
@@ -157,3 +164,4 @@ class Console():
         except:
             a=None
         return a
+
