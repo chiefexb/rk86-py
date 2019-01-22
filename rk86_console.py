@@ -109,7 +109,7 @@ class Console():
                 bytes_ += " "*((width - sz) * 3)
                 chars_ += " "*(width - sz)
           
-            print ("{}: {} | {}".format(hex(from_)[2:], bytes_, chars_)+'')
+            print ("{:04X}: {} | {}".format(from_, bytes_, chars_)+'')
             #print (from_, bytes_, chars_)
             #self.term.write("%04X: %s | %s".format(from, bytes, chars));
             #self.term.newLine();
@@ -153,10 +153,14 @@ class Console():
             cpu.memory=mem
     
         return cpu
-    def load_cmd (self, ar):
-       f=parse_rk86_binary ('KAKVAS.GAM')
-       print ('loading KAKVAS.GAM' +str(f['size'] ))
-       self.cpu.memory.load_file(f)
+    def load_cmd(self,arg):
+        mem=self.cpu.memory
+        if len(arg)>1:
+            fl=parse_rk86_binary(arg[1])
+        else:
+            fl=parse_rk86_binary('KAKVAS.GAM')
+        print ('Loading file {} size'.format(fl['size']) )
+        mem.load_file(fl)
     def parseInt (self,ar):
         ar=ar.lower().lstrip('0x')
         try:
